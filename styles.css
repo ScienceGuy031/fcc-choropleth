@@ -1,0 +1,12 @@
+#tooltip {
+    background-color: #333;
+    padding: .3rem;
+    border-radius: 10px;
+}
+
+#tooltip p {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
