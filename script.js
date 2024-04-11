@@ -29,14 +29,15 @@ const svg = graph
 
 const path = d3.geoPath();
 
+// Tooltip
+const tip = d3.tip().attr("class", "d3-tip").attr("id", "tooltip");
+svg.call(tip);
+
 // API call(s)
 d3.json(countyUrl).then((countyData) => {
   const counties = topojson.feature(countyData, countyData.objects.counties);
-  console.log(counties);
 
   d3.json(eduUrl).then((eduData) => {
-    console.log(eduData);
-
     svg
       .selectAll("path")
       .data(counties.features)
@@ -58,7 +59,22 @@ d3.json(countyUrl).then((countyData) => {
           return getColor(result[0].bachelorsOrHigher);
         }
         return "red";
-      });
+      })
+      .on("mouseover", (e, d) => {
+        let html = "";
+        const edu = e.target.attributes[3].value;
+        const result = eduData.filter((county) => county.fips === d.id);
+        if (result[0]) {
+          const name = result[0].area_name;
+          const state = result[0].state;
+          html += `${name}, ${state}<br>${edu}%`;
+
+          tip.attr("data-education", edu);
+          tip.html(html);
+          tip.show(e);
+        }
+      })
+      .on("mouseout", tip.hide);
   });
 });
 
