@@ -88,7 +88,7 @@ legend.attr("id", "legend");
 const legendScale = d3.scaleLinear().domain([0, 10]).range([50, 550]);
 
 legendAxis = d3.axisBottom(legendScale);
-legendAxis.tickFormat((d) => d + "%");
+legendAxis.tickFormat((d) => d * 10 + "%");
 
 legend.append("g").attr("transform", "translate(0,100)").call(legendAxis);
 
