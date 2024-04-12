@@ -31,8 +31,8 @@ const path = d3.geoPath();
 
 //Panning and Zooming
 const g = svg.append('g');
-svg.call(d3.zoom().on('zoom', () => {
-  g.attr('transform', d3.event.transform);
+svg.call(d3.zoom().on('zoom', (e) => {
+  g.attr('transform', e.transform);
 }));
 
 // Tooltip
