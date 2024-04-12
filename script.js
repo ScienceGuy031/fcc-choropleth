@@ -29,6 +29,12 @@ const svg = graph
 
 const path = d3.geoPath();
 
+//Panning and Zooming
+const g = svg.append('g');
+svg.call(d3.zoom().on('zoom', () => {
+  g.attr('transform', d3.event.transform);
+}));
+
 // Tooltip
 const tip = d3.tip().attr("class", "d3-tip").attr("id", "tooltip");
 svg.call(tip);
@@ -38,7 +44,7 @@ d3.json(countyUrl).then((countyData) => {
   const counties = topojson.feature(countyData, countyData.objects.counties);
 
   d3.json(eduUrl).then((eduData) => {
-    svg
+    g
       .selectAll("path")
       .data(counties.features)
       .enter()
